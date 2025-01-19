@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PieceData" load_steps=4 format=3 uid="uid://slia7cu2jyxb"]
+
+[ext_resource type="Script" path="res://data/pieces/movesets/w_rook.gd" id="1_esetr"]
+[ext_resource type="Texture2D" uid="uid://dv0u4wd7iw0m8" path="res://data/pieces/sprites/w_rook.png" id="2_n7127"]
+[ext_resource type="Script" path="res://data/piece_data.gd" id="3_1apd7"]
+
+[resource]
+script = ExtResource("3_1apd7")
+piece_name = "rook"
+piece_colour = "white"
+piece_sprite = ExtResource("2_n7127")
+movesets = Array[GDScript]([ExtResource("1_esetr")])

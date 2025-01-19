@@ -1,8 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://dekfkeedkals7"]
+[gd_scene load_steps=5 format=3 uid="uid://dekfkeedkals7"]
 
+[ext_resource type="Script" path="res://game.gd" id="1_ooast"]
 [ext_resource type="TileSet" uid="uid://bwijshv645yvg" path="res://assets/board_tile_set.tres" id="2_5x116"]
-[ext_resource type="Script" path="res://board.gd" id="3_2o1hj"]
+[ext_resource type="TileSet" uid="uid://bg64mdtcovpjv" path="res://assets/move_indicator_set.tres" id="3_f1d10"]
+[ext_resource type="PackedScene" uid="uid://chogpbn0qjkdh" path="res://gui.tscn" id="3_r4ojm"]
 
-[node name="Board" type="TileMapLayer"]
+[node name="Game" type="Node2D"]
+script = ExtResource("1_ooast")
+
+[node name="BoardTileMap" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_5x116")
-script = ExtResource("3_2o1hj")
+
+[node name="MoveDisplayTileMap" type="TileMapLayer" parent="."]
+tile_set = ExtResource("3_f1d10")
+
+[node name="GUI" parent="." instance=ExtResource("3_r4ojm")]
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(0.2, 0.2)

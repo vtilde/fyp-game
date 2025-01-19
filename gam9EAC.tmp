@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dekfkeedkals7"]
+
+[ext_resource type="TileSet" uid="uid://bwijshv645yvg" path="res://assets/board_tile_set.tres" id="2_5x116"]
+[ext_resource type="Script" path="res://board.gd" id="3_2o1hj"]
+
+[node name="Board" type="TileMapLayer"]
+tile_set = ExtResource("2_5x116")
+script = ExtResource("3_2o1hj")
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(0.2, 0.2)
