@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PieceData" load_steps=2 format=3 uid="uid://haxruoabrqgv"]
+
+[ext_resource type="Script" path="res://data/piece_data.gd" id="1_eqk2q"]
+
+[resource]
+script = ExtResource("1_eqk2q")
+piece_name = ""
+piece_colour = "white"
+movesets = Array[GDScript]([])

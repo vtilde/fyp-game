@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PieceData" load_steps=4 format=3 uid="uid://b5eu7komqriuh"]
+
+[ext_resource type="Script" path="res://data/piece_data.gd" id="1_0pdoi"]
+[ext_resource type="Texture2D" uid="uid://cmljig0x2jyon" path="res://data/pieces/sprites/w-queen.png" id="1_6xn02"]
+[ext_resource type="Script" path="res://data/pieces/movesets/w_queen.gd" id="1_psbc5"]
+
+[resource]
+script = ExtResource("1_0pdoi")
+piece_name = "Queen"
+piece_colour = "white"
+piece_sprite = ExtResource("1_6xn02")
+movesets = Array[GDScript]([ExtResource("1_psbc5")])
