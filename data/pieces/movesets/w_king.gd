@@ -1,8 +1,8 @@
 extends Node
 
 # King
-func calculate_moves(board: Dictionary, position: Vector2i, rules: Dictionary):
-	var valid_moves = []
+func calculate_moves(position: Vector2i) -> Array[Vector2i]:
+	var valid_moves: Array[Vector2i] = []
 	for direction in [
 			Vector2i(-1, -1), # NW
 			Vector2i(0, -1),  # N
@@ -14,7 +14,7 @@ func calculate_moves(board: Dictionary, position: Vector2i, rules: Dictionary):
 			Vector2i(1, 1)    # SE
 		]:
 		var destination = position + direction
-		if board.has(destination) and board[destination]["tile"]:
+		if Global.board.tile_exists(destination):
 			valid_moves.append(destination)
 	
 	return valid_moves

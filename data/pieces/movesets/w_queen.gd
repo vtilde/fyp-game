@@ -1,8 +1,8 @@
 extends Node
 
 # Queen
-func calculate_moves(board: Dictionary, position: Vector2i, rules: Dictionary):
-	var valid_moves = []
+func calculate_moves(position: Vector2i) -> Array[Vector2i]:
+	var valid_moves: Array[Vector2i] = []
 	for direction in [
 			Vector2i(0, -1),  # N
 			Vector2i(0, 1),   # S
@@ -12,17 +12,18 @@ func calculate_moves(board: Dictionary, position: Vector2i, rules: Dictionary):
 			Vector2i(1, -1),  # NE
 			Vector2i(-1, 1),  # SW
 			Vector2i(1, 1)    # SE
-		]:
+	]:
 		var current_tile = position
-		while true:
+		var moving = true
+		while moving:
 			current_tile += direction
-			if not board.has(current_tile):
-				break
-			elif not board[current_tile]["tile"]:
-				break
-			else:
+			if Global.board.tile_exists(current_tile):
+				# add valid move if tile exists
 				valid_moves.append(current_tile)
-				if board[current_tile]["piece"] != null:
-					break
-	
+				if Global.board.tile_full(current_tile):
+					# if tile has piece, stop moving in this direction
+					moving = false
+			else:
+				moving = false
+		
 	return valid_moves

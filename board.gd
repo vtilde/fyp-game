@@ -60,6 +60,8 @@ func move_piece(position: Vector2i, destination: Vector2i) -> bool:
 	# if destination is empty OR has a capturable piece
 	board[destination]["piece"] = board[position]["piece"]
 	board[position]["piece"] = null
+	# call piece.move() (e.g. to disable pawn double move)
+	board[destination]["piece"].move()
 	return true
 
 

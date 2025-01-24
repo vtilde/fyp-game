@@ -30,29 +30,32 @@ func add_moveset(moveset: GDScript):
 
 func calculate_moves(position: Vector2i) -> Array[Vector2i]:
 	var valid_moves: Array[Vector2i] = []
+	# add valid move to array for each moveset (pieces will usually only have 1)
 	for moveset in $Movement.get_children():
 		for move in moveset.calculate_moves(position):
 			if move not in valid_moves:
 				valid_moves.append(move)
+	
+	# if friendly fire is false, remove moves that land on piece of same colour
+	if not Global.rules.get("friendly_fire", false):
+		print("friendly fire false")
+		var friendly_moves: Array[Vector2i] = []
+		var colour = get_colour()
+		for move in valid_moves:
+			# allow if tile is empty
+			if not Global.board.tile_full(move):
+				friendly_moves.append(move)
+			else:
+				# allow if tile is full and different colour to self
+				if Global.board.get_piece(move).get_colour() != colour:
+					friendly_moves.append(move)
+		valid_moves = friendly_moves
+	
 	return valid_moves
 
-#func calculate_moves(board: Dictionary, position: Vector2i, rules: Dictionary):
-	#print("caulcuating moves")
-	#var valid_moves = []
-	#for moveset in $Movement.get_children():
-		#for move in moveset.calculate_moves(board, position, rules):
-			#if move not in valid_moves:
-				#valid_moves.append(move)
-	#return valid_moves
 
 func move():
 	moved = true
 
 func get_taken():
 	queue_free()
-	
-
-# class for basic piece
-# contains code for common functionality such as:
-# - being moved
-# - being taken

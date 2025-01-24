@@ -1,8 +1,8 @@
 extends Node
 
 # Knight
-func calculate_moves(board: Dictionary, position: Vector2i, rules: Dictionary):
-	var valid_moves = []
+func calculate_moves(position: Vector2i) -> Array[Vector2i]:
+	var valid_moves: Array[Vector2i] = []
 	for direction in [
 			Vector2i(-1, -2), Vector2i(1, -2), # NNW, NNE
 			Vector2i(-1, 2), Vector2i(1, 2),   # SSW, SSE
@@ -10,7 +10,7 @@ func calculate_moves(board: Dictionary, position: Vector2i, rules: Dictionary):
 			Vector2i(2, -1), Vector2i(2, 1)    # EEN, EES
 		]:
 		var destination = position + direction
-		if board.has(destination) and board[destination]["tile"]:
+		if Global.board.tile_exists(destination):
 			valid_moves.append(destination)
 	
 	return valid_moves

@@ -8,7 +8,7 @@ extends Node2D
 
 var board: Board
 var selected_tile = null
-var player_turn = "black"
+var player_turn = "white"
 
 var rules = {
 	"friendly_fire" = false, # true: pieces can take pieces of the same colour
@@ -24,20 +24,30 @@ func _ready() -> void:
 	Global.board = board
 	Global.rules = rules
 	
-	board.add_piece("b_rook", Vector2i(27, 34))
-	board.add_piece("b_rook", Vector2i(34, 34))
-	board.add_piece("w_rook", Vector2i(27, 27))
-
-	## default setup
-	#add_piece("b_rook", Vector2i(28, 28))
-	#add_piece("w_bishop", Vector2i(30, 28))
-	#add_piece("b_knight", Vector2i(29, 30))
-	#add_piece("w_rook", Vector2i(31, 32))
-	#add_piece("b_queen", Vector2i(32, 32))
-	#add_piece("w_king", Vector2i(33, 33))
-	#add_piece("b_pawn", Vector2i(30, 33))
+	# default board setup
+	# white
+	for i in range(27, 35):
+		board.add_piece("w_pawn", Vector2i(i, 33))
+	board.add_piece("w_rook", Vector2i(27, 34))
+	board.add_piece("w_knight", Vector2i(28, 34))
+	board.add_piece("w_bishop", Vector2i(29, 34))
+	board.add_piece("w_queen", Vector2i(30, 34))
+	board.add_piece("w_king", Vector2i(31, 34))
+	board.add_piece("w_bishop", Vector2i(32, 34))
+	board.add_piece("w_knight", Vector2i(33, 34))
+	board.add_piece("w_rook", Vector2i(34, 34))
 	
-	player_turn = "black"
+	# black
+	for i in range(27, 35):
+		board.add_piece("b_pawn", Vector2i(i, 28))
+	board.add_piece("b_rook", Vector2i(27, 27))
+	board.add_piece("b_knight", Vector2i(28, 27))
+	board.add_piece("b_bishop", Vector2i(29, 27))
+	board.add_piece("b_queen", Vector2i(30, 27))
+	board.add_piece("b_king", Vector2i(31, 27))
+	board.add_piece("b_bishop", Vector2i(32, 27))
+	board.add_piece("b_knight", Vector2i(33, 27))
+	board.add_piece("b_rook", Vector2i(34, 27))
 	
 	render_board()
 	centre_camera()
@@ -59,7 +69,6 @@ func render_board():
 			$BoardTileMap.set_cell(position, 0, tile_black)
 	
 	for piece in board.get_all_pieces():
-		print(piece)
 		piece["piece"].position = $BoardTileMap.map_to_local(piece["position"])
 
 	
@@ -95,8 +104,10 @@ func select_piece(clicked_tile: Vector2i):
 	if board.tile_full(clicked_tile):
 		var piece = board.get_piece(clicked_tile) as Piece
 		if piece.get_colour() == player_turn:
-			selected_tile = clicked_tile
-			display_moves(board.calculate_moves(selected_tile))
+			var moves = board.calculate_moves(clicked_tile)
+			if len(moves) != 0:
+				selected_tile = clicked_tile
+				display_moves(moves)
 
 func display_moves(valid_moves):
 	for tile in valid_moves:
@@ -110,6 +121,7 @@ func move_piece(clicked_tile: Vector2i):
 	else:
 		var move_successful = board.move_piece(selected_tile, clicked_tile)
 		if move_successful:
+			
 			change_turn()
 	
 	# deselect tile (includes moving and cancelling)
