@@ -8,3 +8,8 @@ script = ExtResource("1_8cnm0")
 [node name="PlayerTurn" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="TurnPhase" type="Label" parent="."]
+offset_top = 24.0
+offset_right = 40.0
+offset_bottom = 47.0

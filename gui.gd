@@ -12,3 +12,6 @@ func _process(delta: float) -> void:
 
 func set_player_turn(player):
 	$PlayerTurn.text = "turn: " + player
+
+func set_turn_phase(phase):
+	$TurnPhase.text = "phase: " + str(phase)
