@@ -97,6 +97,7 @@ func _on_tile_clicked(position: Vector2i) -> void:
 			move_piece(position)
 
 
+
 #func _input(event):
 	#if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
 		#if turn_phase == Phase.ITEM:
