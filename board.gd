@@ -35,6 +35,13 @@ func create_board(
 				"piece": null
 			}
 
+func add_tile(position: Vector2i) -> void:
+	if not tile_exists(position):
+		board[position] = {
+			"tile": true,
+			"piece": null
+		}
+
 func add_piece(resource_name: String, position: Vector2i):
 	var piece = preload("res://data/piece.tscn").instantiate()
 	piece.set_piece_data(load("res://data/pieces/resources/" + resource_name + ".tres"))

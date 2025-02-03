@@ -6,6 +6,8 @@ extends Node2D
 @export var board_max_x = 64
 @export var board_max_y = 64
 
+
+# set up game
 var board: Board
 var player_turn = "white"
 enum Phase{
@@ -13,6 +15,8 @@ enum Phase{
 	MOVE
 }
 var turn_phase: Phase = Phase.MOVE
+
+
 
 var selected_tile = null
 var selected_item = null
@@ -23,7 +27,6 @@ var rules = {
 	"pawn_double_require_2nd_rank" = false # true: pawns can only move 2 spaces from their 2nd rank 
 }
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	board = $Board
 	board.create_board(board_x, board_y, board_max_x, board_max_y, rules)
@@ -62,6 +65,8 @@ func _ready() -> void:
 	
 	render_board()
 	centre_camera()
+	
+	add_item("new_tiles")
 
 
 func render_board():
@@ -89,14 +94,25 @@ func centre_camera():
 	camera.position.y = ((board_max_y / 2) - 1) * 128
 
 
+func add_item(item_path: String):
+	var new_item = load("res://data/items/" + item_path + ".tscn").instantiate() as Item
+	add_child(new_item)
+	new_item.position = Vector2i(3500, 3500)
+	print(new_item.get_preview())
+
+
+func _on_item_selected():
+	pass
+
+
+
+
 func _on_tile_clicked(position: Vector2i) -> void:
 	if turn_phase == Phase.MOVE:
 		if selected_tile == null:
 			select_piece(position)
 		else:
 			move_piece(position)
-
-
 
 #func _input(event):
 	#if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
