@@ -10,8 +10,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func set_player_turn(player):
-	$PlayerTurn.text = "turn: " + player
+func set_player_turn(player: Player) -> void:
+	$PlayerTurn.text = "turn: " + player.colour
 
-func set_turn_phase(phase):
-	$TurnPhase.text = "phase: " + str(phase)
+func set_turn_phase(phase: String) -> void:
+	$TurnPhase.text = "phase: " + phase

@@ -38,7 +38,6 @@ func calculate_moves(position: Vector2i) -> Array[Vector2i]:
 	
 	# if friendly fire is false, remove moves that land on piece of same colour
 	if not Global.rules.get("friendly_fire", false):
-		print("friendly fire false")
 		var friendly_moves: Array[Vector2i] = []
 		var colour = get_colour()
 		for move in valid_moves:

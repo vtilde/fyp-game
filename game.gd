@@ -6,10 +6,11 @@ extends Node2D
 @export var board_max_x = 64
 @export var board_max_y = 64
 
+@export var starting_player: Player
 
 # set up game
 var board: Board
-var player_turn = "white"
+var player_turn: Player
 enum Phase{
 	ITEM,
 	MOVE
@@ -28,13 +29,13 @@ var rules = {
 }
 
 func _ready() -> void:
+	# setup board
 	board = $Board
-	board.create_board(board_x, board_y, board_max_x, board_max_y, rules)
+	board.create_board(board_x, board_y, board_max_x, board_max_y)
 	
 	Global.board = board
 	Global.rules = rules
 	
-	# default board setup
 	# white
 	for i in range(27, 35):
 		board.add_piece("w_pawn", Vector2i(i, 33))
@@ -59,14 +60,11 @@ func _ready() -> void:
 	board.add_piece("b_knight", Vector2i(33, 27))
 	board.add_piece("b_rook", Vector2i(34, 27))
 	
-	
-	$GUI.set_player_turn(player_turn)
-	$GUI.set_turn_phase(turn_phase)
+	# set player turn
+	start_turn(starting_player)
 	
 	render_board()
 	centre_camera()
-	
-	add_item("new_tiles")
 
 
 func render_board():
@@ -90,21 +88,48 @@ func render_board():
 func centre_camera():
 	var camera = $Camera
 	camera.zoom = Vector2(0.6, 0.6)
+	camera.zoom = Vector2(0.1, 0.1)
 	camera.position.x = ((board_max_x / 2) - 1) * 128
 	camera.position.y = ((board_max_y / 2) - 1) * 128
 
 
-func add_item(item_path: String):
-	var new_item = load("res://data/items/" + item_path + ".tscn").instantiate() as Item
-	add_child(new_item)
-	new_item.position = Vector2i(3500, 3500)
-	print(new_item.get_preview())
 
+# manage game flow
+func start_turn(turn: Player = null) -> void:
+	if turn == null:
+		# next turn by default
+		match player_turn.colour:
+			"black":
+				player_turn = $Players/White
+			"white":
+				player_turn = $Players/Black
+	else:
+		# if specified, start that player's turn (e.g. start of game)
+		player_turn = turn
 
-func _on_item_selected():
-	pass
+	$GUI.set_player_turn(player_turn)
+	
+	# temp: give item
+	add_item(player_turn, preload("res://data/items/new_tiles.tscn").instantiate())
+	add_item(player_turn, preload("res://data/items/new_tiles.tscn").instantiate())
+	add_item(player_turn, preload("res://data/items/new_tiles.tscn").instantiate())
+	
+	# start item phase
+	start_item_phase()
 
+func start_item_phase() -> void:
+	if len(player_turn.items) <= 0:
+		# skip phase if player has no items
+		start_move_phase()
+	else:
+		# set to item phase
+		turn_phase = Phase.ITEM
+		$GUI.set_turn_phase(["item", "move"][turn_phase])
+		player_turn.show_items()
 
+func start_move_phase() -> void:
+	turn_phase = Phase.MOVE
+	$GUI.set_turn_phase(["item", "move"][turn_phase])
 
 
 func _on_tile_clicked(position: Vector2i) -> void:
@@ -114,32 +139,28 @@ func _on_tile_clicked(position: Vector2i) -> void:
 		else:
 			move_piece(position)
 
-#func _input(event):
-	#if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
-		#if turn_phase == Phase.ITEM:
-			#pass
-		#elif turn_phase == Phase.MOVE:
-			## get tilemap coords based on click location (including zoom)
-			#print("clicked grid ", $BoardTileMap.local_to_map($BoardTileMap.make_input_local(event).position))
-			#var tile_position = $BoardTileMap.local_to_map($BoardTileMap.make_input_local(event).position)
-			#if selected_tile == null:
-				#select_piece(tile_position)
-			#else:
-				#move_piece(tile_position)
 
-# show items
-func show_items(player: String):
-	pass
+# manage player items
+func add_item(player: Player, item: Item):
+	var success = player.add_item(item)
+	if success:
+		item.item_selected.connect(_on_item_selected)
 
-func clear_items():
-	pass
+func _on_item_selected(item: Item):
+	# deselect all other items if one is selected
+	for i in player_turn.items:
+		if i != item:
+			i.deselect()
+	
+	# show preview over cursor
 
 
-# select and move piece
+
+# select and move pieces
 func select_piece(clicked_tile: Vector2i):
 	if board.tile_full(clicked_tile):
 		var piece = board.get_piece(clicked_tile) as Piece
-		if piece.get_colour() == player_turn:
+		if piece.get_colour() == player_turn.colour:
 			var moves = board.calculate_moves(clicked_tile)
 			if len(moves) != 0:
 				selected_tile = clicked_tile
@@ -157,7 +178,7 @@ func move_piece(clicked_tile: Vector2i):
 	else:
 		var move_successful = board.move_piece(selected_tile, clicked_tile)
 		if move_successful:
-			change_turn()
+			start_turn()
 	
 	# deselect tile (includes moving and cancelling)
 	selected_tile = null
@@ -168,23 +189,6 @@ func take_piece(position):
 		remove_child(board[position]["piece"])
 		board[position]["piece"].queue_free()
 
-
-# manage game flow
-func change_phase():
-	match turn_phase:
-		Phase.ITEM:
-			turn_phase = Phase.MOVE
-		Phase.MOVE:
-			change_turn()
-			turn_phase = Phase.ITEM
-
-func change_turn():
-	match player_turn:
-		"black":
-			player_turn = "white"
-		"white":
-			player_turn = "black"
-	$GUI.set_player_turn(player_turn)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

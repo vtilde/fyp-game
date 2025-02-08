@@ -3,16 +3,13 @@ class_name Board
 
 ## Dictionary with keys Vector2i of board state
 var board = {}
-## Dictionary with keys for rule names
-var rules = {}
 
 ## Constructs game board from parameters
 func create_board(
 	board_x: int = 8,
 	board_y: int = 8,
 	board_max_x: int = 64,
-	board_max_y: int = 64,
-	rules: Dictionary = {}
+	board_max_y: int = 64
 ):
 	
 	for x in range(board_max_x):
