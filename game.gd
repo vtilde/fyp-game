@@ -20,7 +20,8 @@ var turn_phase: Phase = Phase.MOVE
 
 
 var selected_tile = null
-var selected_item = null
+var selected_item: Item = null
+var selected_item_preview: Array[Vector2i] = []
 
 var rules = {
 	"friendly_fire" = false, # true: pieces can take pieces of the same colour
@@ -60,6 +61,7 @@ func _ready() -> void:
 	board.add_piece("b_knight", Vector2i(33, 27))
 	board.add_piece("b_rook", Vector2i(34, 27))
 	
+	$ItemPreviewTileMap.set_cell(Vector2i(30, 31), 0, Vector2i(0, 0))
 	# set player turn
 	start_turn(starting_player)
 	
@@ -88,9 +90,16 @@ func render_board():
 func centre_camera():
 	var camera = $Camera
 	camera.zoom = Vector2(0.6, 0.6)
-	camera.zoom = Vector2(0.1, 0.1)
+	camera.zoom = Vector2(0.4, 0.4)
 	camera.position.x = ((board_max_x / 2) - 1) * 128
 	camera.position.y = ((board_max_y / 2) - 1) * 128
+
+
+func _on_tile_hovered(position: Vector2i) -> void:
+	$ItemPreviewTileMap.clear()
+	if len(selected_item_preview) != 0:
+		for tile in selected_item_preview:
+			$ItemPreviewTileMap.set_cell(position + tile, 0, Vector2i(0,0))
 
 
 
@@ -145,15 +154,23 @@ func add_item(player: Player, item: Item):
 	var success = player.add_item(item)
 	if success:
 		item.item_selected.connect(_on_item_selected)
+		item.item_deselected.connect(_on_item_deselected)
 
 func _on_item_selected(item: Item):
 	# deselect all other items if one is selected
 	for i in player_turn.items:
 		if i != item:
 			i.deselect()
+	selected_item = item
 	
 	# show preview over cursor
+	selected_item_preview = selected_item.get_preview()
 
+func _on_item_deselected(item: Item):
+	print("deselected")
+	selected_item = null
+	selected_item_preview = []
+	$ItemPreviewTileMap.clear()
 
 
 # select and move pieces

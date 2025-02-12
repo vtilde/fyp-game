@@ -3,18 +3,21 @@ extends Item
 @export var max_x: int = 3
 @export var max_y: int = 3
 @export var tile_chance: float = 0.3
+@export var guaranteed_tiles: Array[Vector2i] = [Vector2i(0, 0)]
 @export var min_tiles: int = 1
 
 var layout: Array[Vector2i]
 
 func _ready() -> void:
+	for i in guaranteed_tiles:
+		layout.append(i)
 	for x in max_x:
 		for y in max_y:
-			if randf() < tile_chance:
-				layout.append(Vector2i(x, y))
+			if Vector2i(x, -y) not in layout and randf() < tile_chance:
+				layout.append(Vector2i(x, -y))
 	# add random tile if below minimum
 	while len(layout) < min_tiles:
-		layout.append(Vector2i(randi() % max_x, randi() % max_y))
+		layout.append(Vector2i(randi() % max_x, -(randi() % max_y)))
 
 ## return list of tiles to place (cursor at top left)
 func get_preview() -> Array[Vector2i]:
