@@ -61,7 +61,8 @@ func _ready() -> void:
 	board.add_piece("b_knight", Vector2i(33, 27))
 	board.add_piece("b_rook", Vector2i(34, 27))
 	
-	$ItemPreviewTileMap.set_cell(Vector2i(30, 31), 0, Vector2i(0, 0))
+	board.get_node("ItemPreviewTileMap").set_cell(Vector2i(30, 31), 0, Vector2i(0, 0))
+	#$ItemPreviewTileMap.set_cell(Vector2i(30, 31), 0, Vector2i(0, 0))
 	# set player turn
 	start_turn(starting_player)
 	
@@ -71,7 +72,7 @@ func _ready() -> void:
 
 func render_board():
 	# clear valid moves indicators
-	$MoveDisplayTileMap.clear()
+	board.get_node("MoveDisplayTileMap").clear()
 	
 	# tileset coords for tile sprites
 	var tile_black = Vector2i(0, 0)
@@ -80,26 +81,26 @@ func render_board():
 	for position in board.get_all_tiles():
 		# checkerboard pattern (even coords sum = white tile)
 		if (position.x + position.y) % 2 == 0:
-			$BoardTileMap.set_cell(position, 0, tile_white)
+			board.get_node("BoardTileMap").set_cell(position, 0, tile_white)
 		else:
-			$BoardTileMap.set_cell(position, 0, tile_black)
+			board.get_node("BoardTileMap").set_cell(position, 0, tile_black)
 	
 	for piece in board.get_all_pieces():
-		piece["piece"].position = $BoardTileMap.map_to_local(piece["position"])
+		piece["piece"].position = board.get_node("BoardTileMap").map_to_local(piece["position"])
 
 func centre_camera():
-	var camera = $Camera
+	var camera = board.get_node("Camera")
 	camera.zoom = Vector2(0.6, 0.6)
-	camera.zoom = Vector2(0.4, 0.4)
+	#camera.zoom = Vector2(0.1, 0.1)
 	camera.position.x = ((board_max_x / 2) - 1) * 128
 	camera.position.y = ((board_max_y / 2) - 1) * 128
 
 
 func _on_tile_hovered(position: Vector2i) -> void:
-	$ItemPreviewTileMap.clear()
+	board.get_node("ItemPreviewTileMap").clear()
 	if len(selected_item_preview) != 0:
 		for tile in selected_item_preview:
-			$ItemPreviewTileMap.set_cell(position + tile, 0, Vector2i(0,0))
+			board.get_node("ItemPreviewTileMap").set_cell(position + tile, 0, Vector2i(0,0))
 
 
 
@@ -134,19 +135,23 @@ func start_item_phase() -> void:
 		# set to item phase
 		turn_phase = Phase.ITEM
 		$GUI.set_turn_phase(["item", "move"][turn_phase])
-		player_turn.show_items()
+		player_turn.start_turn()
 
 func start_move_phase() -> void:
 	turn_phase = Phase.MOVE
 	$GUI.set_turn_phase(["item", "move"][turn_phase])
 
-
 func _on_tile_clicked(position: Vector2i) -> void:
-	if turn_phase == Phase.MOVE:
+	if turn_phase == Phase.ITEM and selected_item != null:
+		print(position)
+		#var item_success = selected_item.use()
+		
+	elif turn_phase == Phase.MOVE:
 		if selected_tile == null:
 			select_piece(position)
 		else:
 			move_piece(position)
+
 
 
 # manage player items
@@ -167,10 +172,9 @@ func _on_item_selected(item: Item):
 	selected_item_preview = selected_item.get_preview()
 
 func _on_item_deselected(item: Item):
-	print("deselected")
 	selected_item = null
 	selected_item_preview = []
-	$ItemPreviewTileMap.clear()
+	board.get_node("ItemPreviewTileMap").clear()
 
 
 # select and move pieces
@@ -185,11 +189,11 @@ func select_piece(clicked_tile: Vector2i):
 
 func display_moves(valid_moves):
 	for tile in valid_moves:
-		$MoveDisplayTileMap.set_cell(tile, 0, Vector2i(0,0))
+		board.get_node("MoveDisplayTileMap").set_cell(tile, 0, Vector2i(0,0))
 
 func move_piece(clicked_tile: Vector2i):
 	# clicked invalid -> cancel
-	if $MoveDisplayTileMap.get_cell_tile_data(clicked_tile) == null:
+	if board.get_node("MoveDisplayTileMap").get_cell_tile_data(clicked_tile) == null:
 		selected_tile = null
 	# clicked valid ->
 	else:

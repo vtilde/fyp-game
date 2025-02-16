@@ -7,39 +7,41 @@
 [ext_resource type="Script" path="res://board_tile_map.gd" id="4_ksyot"]
 [ext_resource type="Script" path="res://board.gd" id="5_0dscv"]
 [ext_resource type="PackedScene" uid="uid://d4ekix2whluig" path="res://player.tscn" id="6_mku7r"]
-[ext_resource type="TileSet" uid="uid://llt1mrkljsob" path="res://assets/item_preview_set.tres" id="6_va3kw"]
+[ext_resource type="TileSet" uid="uid://dc8sv0xs065t8" path="res://assets/item_preview_set.tres" id="6_va3kw"]
 [ext_resource type="Script" path="res://item_preview_tile_map.gd" id="7_rlnvk"]
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("starting_player")]
 script = ExtResource("1_ooast")
-starting_player = NodePath("Players/White")
+starting_player = NodePath("GUI/Players/White")
 
 [node name="Board" type="Node" parent="."]
 script = ExtResource("5_0dscv")
 
-[node name="BoardTileMap" type="TileMapLayer" parent="."]
+[node name="BoardTileMap" type="TileMapLayer" parent="Board"]
 tile_set = ExtResource("2_5x116")
 script = ExtResource("4_ksyot")
 
-[node name="MoveDisplayTileMap" type="TileMapLayer" parent="."]
+[node name="MoveDisplayTileMap" type="TileMapLayer" parent="Board"]
 tile_set = ExtResource("3_f1d10")
 
-[node name="ItemPreviewTileMap" type="TileMapLayer" parent="."]
+[node name="ItemPreviewTileMap" type="TileMapLayer" parent="Board"]
 tile_set = ExtResource("6_va3kw")
 script = ExtResource("7_rlnvk")
 
-[node name="GUI" parent="." instance=ExtResource("3_r4ojm")]
-
-[node name="Camera" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="Board"]
 zoom = Vector2(0.2, 0.2)
 
-[node name="Players" type="Node" parent="."]
+[node name="GUI" parent="." instance=ExtResource("3_r4ojm")]
 
-[node name="White" parent="Players" instance=ExtResource("6_mku7r")]
+[node name="Players" type="Node" parent="GUI"]
+
+[node name="White" parent="GUI/Players" instance=ExtResource("6_mku7r")]
 colour = "white"
+metadata/_edit_use_anchors_ = true
 
-[node name="Black" parent="Players" instance=ExtResource("6_mku7r")]
+[node name="Black" parent="GUI/Players" instance=ExtResource("6_mku7r")]
 colour = "black"
+metadata/_edit_use_anchors_ = true
 
-[connection signal="tile_clicked" from="BoardTileMap" to="." method="_on_tile_clicked"]
-[connection signal="tile_hovered" from="ItemPreviewTileMap" to="." method="_on_tile_hovered"]
+[connection signal="tile_clicked" from="Board/BoardTileMap" to="." method="_on_tile_clicked"]
+[connection signal="tile_hovered" from="Board/ItemPreviewTileMap" to="." method="_on_tile_hovered"]
