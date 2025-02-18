@@ -110,13 +110,13 @@ func start_turn(turn: Player = null) -> void:
 		# next turn by default
 		match player_turn.colour:
 			"black":
-				player_turn = $Players/White
+				player_turn = $GUI/Players/White
 			"white":
-				player_turn = $Players/Black
+				player_turn = $GUI/Players/Black
 	else:
 		# if specified, start that player's turn (e.g. start of game)
 		player_turn = turn
-
+	
 	$GUI.set_player_turn(player_turn)
 	
 	# temp: give item
@@ -135,16 +135,21 @@ func start_item_phase() -> void:
 		# set to item phase
 		turn_phase = Phase.ITEM
 		$GUI.set_turn_phase(["item", "move"][turn_phase])
-		player_turn.start_turn()
+		player_turn.show_items()
 
 func start_move_phase() -> void:
 	turn_phase = Phase.MOVE
+	player_turn.hide_items()
+		
 	$GUI.set_turn_phase(["item", "move"][turn_phase])
 
 func _on_tile_clicked(position: Vector2i) -> void:
 	if turn_phase == Phase.ITEM and selected_item != null:
-		print(position)
-		#var item_success = selected_item.use()
+		var item_success = selected_item.use(position)
+		if item_success:
+			render_board()
+			start_move_phase()
+			print("item used at ", position)
 		
 	elif turn_phase == Phase.MOVE:
 		if selected_tile == null:

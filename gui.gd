@@ -11,7 +11,8 @@ func _process(delta: float) -> void:
 	pass
 
 func set_player_turn(player: Player) -> void:
-	$PlayerTurn.text = "turn: " + player.colour
+	print(player)
+	$Container/PlayerTurn.text = "turn: " + player.colour
 
 func set_turn_phase(phase: String) -> void:
-	$TurnPhase.text = "phase: " + phase
+	$Container/TurnPhase.text = "phase: " + phase

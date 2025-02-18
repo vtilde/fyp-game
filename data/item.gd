@@ -16,14 +16,6 @@ func _gui_input(event: InputEvent) -> void:
 		else:
 			deselect()
 
-#func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
-	#if event.is_action_pressed("click"):
-		#if not selected:
-			#select()
-		#else:
-			#deselect()
-		#get_viewport().set_input_as_handled()
-
 func select():
 	selected = true
 	position.y -= select_offset

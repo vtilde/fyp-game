@@ -9,11 +9,7 @@ var items: Array[Item]
 func _ready() -> void:
 	if max_items < 0:
 		max_items = 0
-	
-	#var viewport = get_viewport_rect().size
-	#$Items.offset = Vector2(0, viewport.y)
-	#hide_items()
-	end_turn()
+	hide_items()
 
 func add_item(item: Item) -> bool:
 	if len(items) + 1 <= max_items:
@@ -23,13 +19,14 @@ func add_item(item: Item) -> bool:
 	else:
 		return false
 
-func start_turn() -> void:
-	#return
-	#var viewport = get_viewport_rect().size
-	#var item_spacing = viewport.x / (len(items) + 1)
-	#for i in range(len(items)):
-		#items[i].position = Vector2(item_spacing * (i + 1), 0)
+func deselect_all_items() -> void:
+	for item in items:
+		item.deselect()
+
+func show_items() -> void:
+	deselect_all_items()
 	$Items.visible = true
 
-func end_turn() -> void:
+func hide_items() -> void:
+	deselect_all_items()
 	$Items.visible = false

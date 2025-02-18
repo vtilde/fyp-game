@@ -1,15 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://chogpbn0qjkdh"]
+[gd_scene load_steps=3 format=3 uid="uid://chogpbn0qjkdh"]
 
 [ext_resource type="Script" path="res://gui.gd" id="1_8cnm0"]
+
+[sub_resource type="Theme" id="Theme_t33oc"]
+default_font_size = 40
 
 [node name="GUI" type="CanvasLayer"]
 script = ExtResource("1_8cnm0")
 
-[node name="PlayerTurn" type="Label" parent="."]
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_t33oc")
+
+[node name="PlayerTurn" type="Label" parent="Container"]
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="TurnPhase" type="Label" parent="."]
-offset_top = 24.0
+[node name="TurnPhase" type="Label" parent="Container"]
+offset_top = 70.0
 offset_right = 40.0
-offset_bottom = 47.0
+offset_bottom = 125.0
