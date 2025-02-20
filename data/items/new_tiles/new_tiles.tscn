@@ -1,0 +1,119 @@
+[gd_scene load_steps=13 format=3 uid="uid://v0p4nodunmk3"]
+
+[ext_resource type="Script" path="res://data/items/new_tiles/new_tiles.gd" id="1_lyncg"]
+[ext_resource type="Texture2D" uid="uid://cof2488t67f3p" path="res://data/items/new_tiles/card.png" id="2_fg8e6"]
+[ext_resource type="Texture2D" uid="uid://c1wkrjykd5kxl" path="res://data/items/new_tiles/new_tiles_0001.png" id="3_35qpe"]
+[ext_resource type="Texture2D" uid="uid://bgmq8vi83q1sp" path="res://data/items/new_tiles/new_tiles_0011.png" id="4_35hjt"]
+[ext_resource type="Texture2D" uid="uid://dlf4bs3li3nps" path="res://data/items/new_tiles/new_tiles_0101.png" id="5_s5g5p"]
+[ext_resource type="Texture2D" uid="uid://bgqfxswfc5rad" path="res://data/items/new_tiles/new_tiles_0110.png" id="6_hjfhy"]
+[ext_resource type="Texture2D" uid="uid://djr6tpqor8j5d" path="res://data/items/new_tiles/new_tiles_0111.png" id="7_peg6t"]
+[ext_resource type="Texture2D" uid="uid://duj68gidr3vva" path="res://data/items/new_tiles/new_tiles_1001.png" id="8_xicp5"]
+[ext_resource type="Texture2D" uid="uid://ci0pu5g0sddmp" path="res://data/items/new_tiles/new_tiles_1011.png" id="9_p67kd"]
+[ext_resource type="Texture2D" uid="uid://b8d7iddwbx17b" path="res://data/items/new_tiles/new_tiles_1101.png" id="10_th751"]
+[ext_resource type="Texture2D" uid="uid://kbq5srnbpr5f" path="res://data/items/new_tiles/new_tiles_1110.png" id="11_dgtkg"]
+[ext_resource type="Texture2D" uid="uid://c0mm3hod6jl5j" path="res://data/items/new_tiles/new_tiles_1111.png" id="12_2o71w"]
+
+[node name="NewTiles" type="Control"]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 192.0
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_lyncg")
+
+[node name="ItemBody" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 192.0
+texture = ExtResource("2_fg8e6")
+
+[node name="Icon0001" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("3_35qpe")
+
+[node name="Icon0011" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("4_35hjt")
+
+[node name="Icon0101" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("5_s5g5p")
+
+[node name="Icon0110" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("6_hjfhy")
+
+[node name="Icon0111" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("7_peg6t")
+
+[node name="Icon1001" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("8_xicp5")
+
+[node name="Icon1011" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("9_p67kd")
+
+[node name="Icon1101" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("10_th751")
+
+[node name="Icon1110" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("11_dgtkg")
+
+[node name="Icon1111" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("12_2o71w")

@@ -120,15 +120,15 @@ func start_turn(turn: Player = null) -> void:
 	$GUI.set_player_turn(player_turn)
 	
 	# temp: give item
-	add_item(player_turn, preload("res://data/items/new_tiles.tscn").instantiate())
-	add_item(player_turn, preload("res://data/items/new_tiles.tscn").instantiate())
-	add_item(player_turn, preload("res://data/items/new_tiles.tscn").instantiate())
+	add_item(player_turn, preload("res://data/items/new_tiles/new_tiles.tscn").instantiate())
+	add_item(player_turn, preload("res://data/items/new_tiles/new_tiles.tscn").instantiate())
+	add_item(player_turn, preload("res://data/items/new_tiles/new_tiles.tscn").instantiate())
 	
 	# start item phase
 	start_item_phase()
 
 func start_item_phase() -> void:
-	if len(player_turn.items) <= 0:
+	if len(player_turn.get_items()) <= 0:
 		# skip phase if player has no items
 		start_move_phase()
 	else:
@@ -142,6 +142,7 @@ func start_move_phase() -> void:
 	player_turn.hide_items()
 		
 	$GUI.set_turn_phase(["item", "move"][turn_phase])
+
 
 func _on_tile_clicked(position: Vector2i) -> void:
 	if turn_phase == Phase.ITEM and selected_item != null:
@@ -168,7 +169,7 @@ func add_item(player: Player, item: Item):
 
 func _on_item_selected(item: Item):
 	# deselect all other items if one is selected
-	for i in player_turn.items:
+	for i in player_turn.get_items():
 		if i != item:
 			i.deselect()
 	selected_item = item
