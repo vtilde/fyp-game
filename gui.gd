@@ -10,8 +10,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func set_turn_number(turn: int) -> void:
+	$Container/TurnNumber.text = "turn number: " + str(turn)
+
 func set_player_turn(player: Player) -> void:
-	print(player)
 	$Container/PlayerTurn.text = "turn: " + player.colour
 
 func set_turn_phase(phase: String) -> void:

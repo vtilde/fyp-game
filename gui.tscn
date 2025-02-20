@@ -15,11 +15,19 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = SubResource("Theme_t33oc")
 
-[node name="PlayerTurn" type="Label" parent="Container"]
+[node name="TurnNumber" type="Label" parent="Container"]
+layout_mode = 0
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 55.0
 
-[node name="TurnPhase" type="Label" parent="Container"]
+[node name="PlayerTurn" type="Label" parent="Container"]
+layout_mode = 0
 offset_top = 70.0
 offset_right = 40.0
 offset_bottom = 125.0
+
+[node name="TurnPhase" type="Label" parent="Container"]
+layout_mode = 0
+offset_top = 140.0
+offset_right = 40.0
+offset_bottom = 195.0

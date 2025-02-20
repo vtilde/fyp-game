@@ -10,13 +10,13 @@ extends Node2D
 
 # set up game
 var board: Board
+var turn_number: int = 0
 var player_turn: Player
 enum Phase{
 	ITEM,
 	MOVE
 }
 var turn_phase: Phase = Phase.MOVE
-
 
 
 var selected_tile = null
@@ -118,11 +118,14 @@ func start_turn(turn: Player = null) -> void:
 		player_turn = turn
 	
 	$GUI.set_player_turn(player_turn)
+	if player_turn == starting_player:
+		print("inc turn")
+		turn_number += 1
+	$GUI.set_turn_number(turn_number)
 	
-	# temp: give item
-	add_item(player_turn, preload("res://data/items/new_tiles/new_tiles.tscn").instantiate())
-	add_item(player_turn, preload("res://data/items/new_tiles/new_tiles.tscn").instantiate())
-	add_item(player_turn, preload("res://data/items/new_tiles/new_tiles.tscn").instantiate())
+	# give item every other turn
+	if turn_number % 2 == 0:
+		add_item(player_turn, preload("res://data/items/new_tiles/new_tiles.tscn").instantiate())
 	
 	# start item phase
 	start_item_phase()
