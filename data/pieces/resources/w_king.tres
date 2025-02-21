@@ -9,4 +9,5 @@ script = ExtResource("1_eqk2q")
 piece_name = "King"
 piece_colour = "white"
 piece_sprite = ExtResource("2_yky8m")
+king = true
 movesets = Array[GDScript]([ExtResource("1_e6ubm")])

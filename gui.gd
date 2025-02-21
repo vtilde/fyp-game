@@ -1,9 +1,8 @@
 extends CanvasLayer
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	$WinScreen.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -18,3 +17,7 @@ func set_player_turn(player: Player) -> void:
 
 func set_turn_phase(phase: String) -> void:
 	$Container/TurnPhase.text = "phase: " + phase
+
+func show_win_screen(player: Player) -> void:
+	$WinScreen.visible = true
+	$WinScreen.text = player.colour + " wins"

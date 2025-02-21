@@ -21,6 +21,12 @@ script = ExtResource("5_0dscv")
 tile_set = ExtResource("2_5x116")
 script = ExtResource("4_ksyot")
 
+[node name="Pieces" type="Node" parent="Board/BoardTileMap"]
+
+[node name="White" type="Node" parent="Board/BoardTileMap/Pieces"]
+
+[node name="Black" type="Node" parent="Board/BoardTileMap/Pieces"]
+
 [node name="MoveDisplayTileMap" type="TileMapLayer" parent="Board"]
 tile_set = ExtResource("3_f1d10")
 

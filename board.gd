@@ -39,10 +39,10 @@ func add_tile(position: Vector2i) -> void:
 			"piece": null
 		}
 
-func add_piece(resource_name: String, position: Vector2i):
+func add_piece(player: String, resource_name: String, position: Vector2i):
 	var piece = preload("res://data/piece.tscn").instantiate()
 	piece.set_piece_data(load("res://data/pieces/resources/" + resource_name + ".tres"))
-	add_child(piece)
+	$BoardTileMap/Pieces.get_node(player).add_child(piece)
 	piece.name = piece.get_readable_name() + " _" + piece.name# unique name for debugging
 	board[position]["piece"] = piece
 
@@ -74,8 +74,17 @@ func move_piece(position: Vector2i, destination: Vector2i) -> bool:
 ## if no, do nothing and return false
 func capture_piece(source: Vector2i, position: Vector2i) -> bool:
 	# test for same colour/friendly fire
-	board[position]["piece"].queue_free()
+	board[position]["piece"].free()
 	return true
+
+## return true if player has no remaining kings (i.e. has lost the game)
+## return false if player still has kings
+func player_lost(player: String) -> bool:
+	var has_lost = true
+	for piece in $BoardTileMap/Pieces.get_node(player).get_children():
+		if piece.is_king():
+			has_lost = false
+	return has_lost
 
 
 func get_all_tiles() -> Array[Vector2i]:

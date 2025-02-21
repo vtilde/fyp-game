@@ -39,27 +39,27 @@ func _ready() -> void:
 	
 	# white
 	for i in range(27, 35):
-		board.add_piece("w_pawn", Vector2i(i, 33))
-	board.add_piece("w_rook", Vector2i(27, 34))
-	board.add_piece("w_knight", Vector2i(28, 34))
-	board.add_piece("w_bishop", Vector2i(29, 34))
-	board.add_piece("w_queen", Vector2i(30, 34))
-	board.add_piece("w_king", Vector2i(31, 34))
-	board.add_piece("w_bishop", Vector2i(32, 34))
-	board.add_piece("w_knight", Vector2i(33, 34))
-	board.add_piece("w_rook", Vector2i(34, 34))
+		board.add_piece("White", "w_pawn", Vector2i(i, 33))
+	board.add_piece("White", "w_rook", Vector2i(27, 34))
+	board.add_piece("White", "w_knight", Vector2i(28, 34))
+	board.add_piece("White", "w_bishop", Vector2i(29, 34))
+	board.add_piece("White", "w_queen", Vector2i(30, 34))
+	board.add_piece("White", "w_king", Vector2i(31, 34))
+	board.add_piece("White", "w_bishop", Vector2i(32, 34))
+	board.add_piece("White", "w_knight", Vector2i(33, 34))
+	board.add_piece("White", "w_rook", Vector2i(34, 34))
 	
 	# black
 	for i in range(27, 35):
-		board.add_piece("b_pawn", Vector2i(i, 28))
-	board.add_piece("b_rook", Vector2i(27, 27))
-	board.add_piece("b_knight", Vector2i(28, 27))
-	board.add_piece("b_bishop", Vector2i(29, 27))
-	board.add_piece("b_queen", Vector2i(30, 27))
-	board.add_piece("b_king", Vector2i(31, 27))
-	board.add_piece("b_bishop", Vector2i(32, 27))
-	board.add_piece("b_knight", Vector2i(33, 27))
-	board.add_piece("b_rook", Vector2i(34, 27))
+		board.add_piece("Black", "b_pawn", Vector2i(i, 28))
+	board.add_piece("Black", "b_rook", Vector2i(27, 27))
+	board.add_piece("Black", "b_knight", Vector2i(28, 27))
+	board.add_piece("Black", "b_bishop", Vector2i(29, 27))
+	board.add_piece("Black", "b_queen", Vector2i(30, 27))
+	board.add_piece("Black", "b_king", Vector2i(31, 27))
+	board.add_piece("Black", "b_bishop", Vector2i(32, 27))
+	board.add_piece("Black", "b_knight", Vector2i(33, 27))
+	board.add_piece("Black", "b_rook", Vector2i(34, 27))
 	
 	board.get_node("ItemPreviewTileMap").set_cell(Vector2i(30, 31), 0, Vector2i(0, 0))
 	#$ItemPreviewTileMap.set_cell(Vector2i(30, 31), 0, Vector2i(0, 0))
@@ -146,6 +146,14 @@ func start_move_phase() -> void:
 		
 	$GUI.set_turn_phase(["item", "move"][turn_phase])
 
+func check_win(player: Player):
+	if player.colour == "white":
+		if board.player_lost("Black"):
+			$GUI.show_win_screen(player)
+	elif player.colour == "black":
+		if board.player_lost("White"):
+			$GUI.show_win_screen(player)
+
 
 func _on_tile_clicked(position: Vector2i) -> void:
 	if turn_phase == Phase.ITEM and selected_item != null:
@@ -208,7 +216,12 @@ func move_piece(clicked_tile: Vector2i):
 	else:
 		var move_successful = board.move_piece(selected_tile, clicked_tile)
 		if move_successful:
-			start_turn()
+			# check if game was won
+			var player_win = check_win(player_turn)
+			if player_win:
+				print("player won")
+			else:
+				start_turn()
 	
 	# deselect tile (includes moving and cancelling)
 	selected_tile = null

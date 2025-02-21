@@ -10,6 +10,8 @@ func get_readable_name() -> String:
 	return (piece_data.piece_colour + " " + piece_data.piece_name).capitalize()
 func get_colour() -> String:
 	return piece_data.piece_colour
+func is_king() -> bool:
+	return piece_data.king
 
 # initialization functions
 func set_piece_data(new_piece_data: PieceData):
