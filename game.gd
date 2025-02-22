@@ -137,14 +137,18 @@ func start_item_phase() -> void:
 	else:
 		# set to item phase
 		turn_phase = Phase.ITEM
-		$GUI.set_turn_phase(["item", "move"][turn_phase])
 		player_turn.show_items()
+		$GUI.set_turn_phase(["item", "move"][turn_phase])
+		$GUI.show_skip_item_button()
+
+func _on_item_phase_skipped() -> void:
+	start_move_phase()
 
 func start_move_phase() -> void:
 	turn_phase = Phase.MOVE
 	player_turn.hide_items()
-		
 	$GUI.set_turn_phase(["item", "move"][turn_phase])
+	$GUI.hide_skip_item_button()
 
 func check_win(player: Player):
 	if player.colour == "white":

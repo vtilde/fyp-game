@@ -51,3 +51,4 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="tile_clicked" from="Board/BoardTileMap" to="." method="_on_tile_clicked"]
 [connection signal="tile_hovered" from="Board/ItemPreviewTileMap" to="." method="_on_tile_hovered"]
+[connection signal="skip_item" from="GUI" to="." method="_on_item_phase_skipped"]

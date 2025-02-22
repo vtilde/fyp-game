@@ -18,6 +18,19 @@ func set_player_turn(player: Player) -> void:
 func set_turn_phase(phase: String) -> void:
 	$Container/TurnPhase.text = "phase: " + phase
 
+
+signal skip_item
+
+func show_skip_item_button() -> void:
+	$SkipItemButton.visible = true
+
+func hide_skip_item_button() -> void:
+	$SkipItemButton.visible = false
+
+func _on_skip_item_button_pressed() -> void:
+	skip_item.emit()
+
+
 func show_win_screen(player: Player) -> void:
 	$WinScreen.visible = true
 	$WinScreen.text = player.colour + " wins"
