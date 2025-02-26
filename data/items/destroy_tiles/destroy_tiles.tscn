@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfujkb33bkgl1"]
+
+[ext_resource type="Script" path="res://data/items/destroy_tiles/destroy_tiles.gd" id="1_pqh42"]
+[ext_resource type="Texture2D" uid="uid://dp1ybpdy5v8ux" path="res://data/items/destroy_tiles/card.png" id="2_0latu"]
+[ext_resource type="Texture2D" uid="uid://dh1elfqtb4crc" path="res://data/items/destroy_tiles/destroy_tiles_0001.png" id="3_prfu1"]
+[ext_resource type="Texture2D" uid="uid://c1l770lbsf3nc" path="res://data/items/destroy_tiles/destroy_tiles_0011.png" id="4_ipmh4"]
+[ext_resource type="Texture2D" uid="uid://coccb571jwue2" path="res://data/items/destroy_tiles/destroy_tiles_0101.png" id="5_3kf3b"]
+[ext_resource type="Texture2D" uid="uid://cac6ijnpunrpe" path="res://data/items/destroy_tiles/destroy_tiles_1111.png" id="6_otd8c"]
+
+[node name="DestroyTiles" type="Control"]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 192.0
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_pqh42")
+
+[node name="ItemBody" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 192.0
+texture = ExtResource("2_0latu")
+
+[node name="Icon0001" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("3_prfu1")
+
+[node name="Icon0011" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("4_ipmh4")
+
+[node name="Icon0101" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("5_3kf3b")
+
+[node name="Icon1111" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 112.0
+texture = ExtResource("6_otd8c")

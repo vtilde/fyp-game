@@ -9,8 +9,6 @@ var selected: bool = false
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("click"):
-		print("item clicked")
-		print(get_parent().get_parent().colour)
 		if not selected:
 			select()
 		else:

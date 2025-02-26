@@ -18,7 +18,6 @@ enum Phase{
 }
 var turn_phase: Phase = Phase.MOVE
 
-
 var selected_tile = null
 var selected_item: Item = null
 var selected_item_preview: Array[Vector2i] = []
@@ -28,6 +27,11 @@ var rules = {
 	"pawn_double_require_first_move" = true, # true: pawns can only move 2 spaces on their first move
 	"pawn_double_require_2nd_rank" = false # true: pawns can only move 2 spaces from their 2nd rank 
 }
+
+var items: Array[Resource] = [
+	preload("res://data/items/new_tiles/new_tiles.tscn"),
+	preload("res://data/items/destroy_tiles/destroy_tiles.tscn")
+]
 
 func _ready() -> void:
 	# setup board
@@ -74,6 +78,9 @@ func render_board():
 	# clear valid moves indicators
 	board.get_node("MoveDisplayTileMap").clear()
 	
+	# clear all tiles (to update removed tiles)
+	board.get_node("BoardTileMap").clear()
+	
 	# tileset coords for tile sprites
 	var tile_black = Vector2i(0, 0)
 	var tile_white = Vector2i(1, 0)
@@ -119,13 +126,12 @@ func start_turn(turn: Player = null) -> void:
 	
 	$GUI.set_player_turn(player_turn)
 	if player_turn == starting_player:
-		print("inc turn")
 		turn_number += 1
 	$GUI.set_turn_number(turn_number)
 	
 	# give item every other turn
 	if turn_number % 2 == 0:
-		add_item(player_turn, preload("res://data/items/new_tiles/new_tiles.tscn").instantiate())
+		add_item(player_turn, items.pick_random().instantiate())
 	
 	# start item phase
 	start_item_phase()
@@ -163,9 +169,9 @@ func _on_tile_clicked(position: Vector2i) -> void:
 	if turn_phase == Phase.ITEM and selected_item != null:
 		var item_success = selected_item.use(position)
 		if item_success:
+			print("used item")
 			render_board()
 			start_move_phase()
-			print("item used at ", position)
 		
 	elif turn_phase == Phase.MOVE:
 		if selected_tile == null:

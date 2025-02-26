@@ -39,11 +39,16 @@ func add_tile(position: Vector2i) -> void:
 			"piece": null
 		}
 
+func remove_tile(position: Vector2i) -> void:
+	if tile_exists(position) and not tile_full(position):
+		print("deleting tile", position)
+		board[position] = {"tile": false}
+
 func add_piece(player: String, resource_name: String, position: Vector2i):
 	var piece = preload("res://data/piece.tscn").instantiate()
 	piece.set_piece_data(load("res://data/pieces/resources/" + resource_name + ".tres"))
 	$BoardTileMap/Pieces.get_node(player).add_child(piece)
-	piece.name = piece.get_readable_name() + " _" + piece.name# unique name for debugging
+	piece.name = piece.get_readable_name() + " _" + piece.name # unique name for debugging
 	board[position]["piece"] = piece
 
 func calculate_moves(position: Vector2i) -> Array[Vector2i]:
