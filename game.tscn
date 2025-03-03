@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dekfkeedkals7"]
+[gd_scene load_steps=11 format=3 uid="uid://dekfkeedkals7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_ooast"]
 [ext_resource type="TileSet" uid="uid://bwijshv645yvg" path="res://assets/board_tile_set.tres" id="2_5x116"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d4ekix2whluig" path="res://player.tscn" id="6_mku7r"]
 [ext_resource type="TileSet" uid="uid://dc8sv0xs065t8" path="res://assets/item_preview_set.tres" id="6_va3kw"]
 [ext_resource type="Script" path="res://item_preview_tile_map.gd" id="7_rlnvk"]
+[ext_resource type="Script" path="res://camera.gd" id="8_72w4m"]
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("starting_player")]
 script = ExtResource("1_ooast")
@@ -36,6 +37,7 @@ script = ExtResource("7_rlnvk")
 
 [node name="Camera" type="Camera2D" parent="Board"]
 zoom = Vector2(0.2, 0.2)
+script = ExtResource("8_72w4m")
 
 [node name="GUI" parent="." instance=ExtResource("3_r4ojm")]
 
